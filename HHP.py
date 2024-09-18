@@ -5,6 +5,27 @@ OXY_LIST = []
 OXY_ZERO = 0
 
 
+
+def pulse(heart_rate: int):
+    if isinstance(heart_rate, int):
+        if heart_rate < 0: # if heart rate is less than 0
+            return "Low"
+        if heart_rate < 20 : # if heart rate is less than 20
+            return "Highest"
+        if heart_rate < 40: # if heart rate is less than 40
+            return "Medium"
+        if heart_rate <= 130: # if heart rate is less than or equal to 130
+            return "Low"
+        if heart_rate <= 170: # if heart rate is less than or equal to 170
+            return "Medium"
+        if heart_rate <= 210: # if heart rate is less than or equal to 210
+            return "Highest"
+        else:
+            return "Impossible"
+    else:
+        return "Low"
+
+
 def BloodOxygen(percent):
     global OXY_ZERO
     total = 0
