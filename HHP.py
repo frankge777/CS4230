@@ -4,6 +4,7 @@
 OXY_LIST = []
 OXY_ZERO = 0
 
+
 def BloodOxygen(percent):
     global OXY_ZERO
     total = 0
