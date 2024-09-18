@@ -31,7 +31,8 @@ def BloodOxygen(percent):
             else:
                 i += 1
         avg = total / i
-        return (avg, "equipment fell off finger")
+        print("equipment fell off finger")
+        return avg
 
 
     # Adds up the readinggs and gets the avereage
