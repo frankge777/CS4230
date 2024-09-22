@@ -74,16 +74,49 @@ def BloodOxygen(percent):
         alarm = 1
     return (avg, alarm)
 
+def increment_time(hours, mins, increment=10):
+    # Increase minutes by the increment value (default is 10)
+    mins += increment
+    if mins >= 60:
+        mins -= 60
+        hours += 1
+    if hours >= 24:
+        hours = 0  # Reset to 00 after 24 hours
+    return hours, mins
 
+def format_time(hours, mins):
+    return f"{hours:02d}:{mins:02d}"
+
+def Bloodpressure(input):
+    alarm = ''
+    values = input.split('/')
+    systolic = int(values[0])
+    diastolic = int(values[1])
+    
+    if (systolic > 200 or diastolic > 120) or (systolic < 70 or diastolic > 40):
+        alarm = "Blood pressure medium"
+    elif systolic > 150 or diastolic > 90:
+        alarm = "Blood pressure low"
+    elif systolic < 50 or diastolic < 33:
+        alarm = "Blood pressure dangerously high" 
+    elif systolic > 230 or diastolic > 150:
+        alarm = "equiment error"
+    else:
+        alarm = "Blood pressure normal"
+        
+    return alarm
+
+    
 def main():
     #Open the file with data
     f = open(sys.argv[1],"r")
+    hours = 0
+    mins = 0
 
     #Read contents line by line
     for x in f:
         print(x)
         line = x.split()
-
         #Print line[] Statements for debugging purposes only
         #Code for proccessing Pulse Rate
         line[0]
@@ -91,6 +124,12 @@ def main():
         #print(line[0])
         #Check if data exists for Blood Preassure
         #If so, proccess it
+        current_time = format_time(hours, mins)
+        print("Time:", current_time)
+        
+        # Increment time by 10 minutes
+        hours, mins = increment_time(hours, mins)
+
         if(len(line) > 1):
             if "/" in line[1]:
                 bloodpreassure = line[1] 
@@ -103,7 +142,6 @@ def main():
             bloodpreassure = line[2]
             #print(line[2])
         #Wait 10 seconds for the next line to be proccessed
-
         #Call methods for Pulse
         print("Pulse alarm level: ", Pulse(pulse))
 
@@ -112,7 +150,7 @@ def main():
         print(f"Blood Oxy avg: {avg:.2f}", "Blood Oxy alarm level: ", BOL)
 
         #Call methods for Blood Preassure
-
+        print(Bloodpressure(bloodpreassure))
         time.sleep(1)
 
     #close the file
