@@ -89,22 +89,28 @@ def format_time(hours, mins):
 
 def Bloodpressure(input):
     alarm = ''
+    level = 0
     values = input.split('/')
     systolic = int(values[0])
     diastolic = int(values[1])
     
     if (systolic > 200 or diastolic > 120) or (systolic < 70 or diastolic > 40):
+        level = 2
         alarm = "Blood pressure medium"
     elif systolic > 150 or diastolic > 90:
+        level = 1
         alarm = "Blood pressure low"
     elif systolic < 50 or diastolic < 33:
+        level = 3
         alarm = "Blood pressure dangerously high" 
     elif systolic > 230 or diastolic > 150:
+        level = 2
         alarm = "equiment error"
     else:
+        level = 0
         alarm = "Blood pressure normal"
         
-    return alarm
+    return (alarm,level)
 
     
 def main():
@@ -150,7 +156,8 @@ def main():
         print(f"Blood Oxy avg: {avg:.2f}", "Blood Oxy alarm level: ", BOL)
 
         #Call methods for Blood Preassure
-        print(Bloodpressure(bloodpreassure))
+        bloodpreassure_alarm, bloodlevel = Bloodpressure(bloodpreassure)
+        print(bloodpreassure_alarm)
         time.sleep(1)
 
     #close the file
