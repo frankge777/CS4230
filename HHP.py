@@ -125,42 +125,43 @@ def main():
         line = x.split()
         #Print line[] Statements for debugging purposes only
         #Code for proccessing Pulse Rate
-        line[0]
-        pulse = int(line[0])
-        #print(line[0])
-        #Check if data exists for Blood Preassure
-        #If so, proccess it
-        current_time = format_time(hours, mins)
-        print("Time:", current_time)
-        
-        # Increment time by 10 minutes
-        hours, mins = increment_time(hours, mins)
+        if len(line) > 0:
+            line[0]
+            pulse = int(line[0])
+            #print(line[0])
+            #Check if data exists for Blood Preassure
+            #If so, proccess it
+            current_time = format_time(hours, mins)
+            print("Time:", current_time)
+            
+            # Increment time by 10 minutes
+            hours, mins = increment_time(hours, mins)
 
-        if(len(line) > 1):
-            if "/" in line[1]:
-                bloodpreassure = line[1] 
-            else:
-                bloodoxygen = float(line[1])
-            #print(line[1])
-        #Check if data exists for Blood Oxygen Level
-        #If so, proccess it
-        if(len(line) > 2):
-            bloodpreassure = line[2]
-            #print(line[2])
-        #Wait 10 seconds for the next line to be proccessed
-        #Call methods for Pulse
-        print("Pulse alarm level: ", Pulse(pulse))
+            if(len(line) > 1):
+                if "/" in line[1]:
+                    bloodpreassure = line[1] 
+                else:
+                    bloodoxygen = float(line[1])
+                #print(line[1])
+            #Check if data exists for Blood Oxygen Level
+            #If so, proccess it
+            if(len(line) > 2):
+                bloodpreassure = line[2]
+                #print(line[2])
+            #Wait 10 seconds for the next line to be proccessed
+            #Call methods for Pulse
+            print("Pulse alarm level: ", Pulse(pulse))
 
-        #Call methods for Blood Oxygen
-        avg, BOL = BloodOxygen(bloodoxygen)
-        print(f"Blood Oxy avg: {avg:.2f}", "Blood Oxy alarm level: ", BOL)
+            #Call methods for Blood Oxygen
+            avg, BOL = BloodOxygen(bloodoxygen)
+            print(f"Blood Oxy avg: {avg:.2f}", "Blood Oxy alarm level: ", BOL)
 
-        #Call methods for Blood Preassure
-        bloodpreassure_alarm, bloodlevel = Bloodpressure(bloodpreassure)
-        print(bloodpreassure_alarm)
-        time.sleep(1)
+            #Call methods for Blood Preassure
+            bloodpreassure_alarm, bloodlevel = Bloodpressure(bloodpreassure)
+            print(bloodpreassure_alarm)
+            time.sleep(1)
 
-    #close the file
+        #close the file
     f.close()
 
 
