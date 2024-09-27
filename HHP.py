@@ -11,22 +11,27 @@ OXY_ZERO = 0
 
 def Pulse(heart_rate: int):
     if isinstance(heart_rate, int):
+        '''
+        Impossible = 1
+        Low = 1
+        Medium = 2
+        Highest = 3'''
         if heart_rate < 0: # if heart rate is less than 0
-            return "Low"
-        if heart_rate < 20 : # if heart rate is less than 20
-            return "Highest"
-        if heart_rate < 40: # if heart rate is less than 40
-            return "Medium"
+            return ("Low", 1)
+        if heart_rate <= 20 : # if heart rate is less than or equal to 20
+            return ("Highest", 3)
+        if heart_rate <= 40: # if heart rate is less than  or equal to 40
+            return ("Medium", 2)
         if heart_rate <= 130: # if heart rate is less than or equal to 130
-            return "Low"
+            return ("Low", 1)
         if heart_rate <= 170: # if heart rate is less than or equal to 170
-            return "Medium"
+            return ("Medium", 2)
         if heart_rate <= 210: # if heart rate is less than or equal to 210
-            return "Highest"
+            return ("Highest", 3)
         else:
-            return "Impossible"
+            return ("Impossible", 1)
     else:
-        return "Low"
+        return ("Low", 1)
 
 
 def BloodOxygen(percent):
@@ -66,11 +71,11 @@ def BloodOxygen(percent):
         total += OXY_LIST[x]
     avg = total / len(OXY_LIST)
 
-    if percent <= 50:
+    if percent <= 50: # less than or equal too 50
         alarm = 3
-    elif percent <= 80:
+    elif percent <= 80: # less than or equal too 80
         alarm = 2
-    elif percent <= 85:
+    elif percent <= 85: # less than or equal too 85
         alarm = 1
     return (avg, alarm)
 
@@ -123,7 +128,6 @@ def main():
         for x in f:
             #print(x)
             line = x.split()
-            print(line)
             
             #Print line[] Statements for debugging purposes only
             #Code for proccessing Pulse Rate
@@ -152,15 +156,20 @@ def main():
                     #print(line[2])
                 #Wait 10 seconds for the next line to be proccessed
                 #Call methods for Pulse
-                print("Pulse alarm level: ", Pulse(pulse))
+                #print("Pulse alarm level: ", Pulse(pulse))
+                pulse_alarm = Pulse(pulse)
+                #print(pulse_alarm)
 
                 #Call methods for Blood Oxygen
                 avg, BOL = BloodOxygen(bloodoxygen)
                 print(f"Blood Oxy avg: {avg:.2f}", "Blood Oxy alarm level: ", BOL)
-
+                
+                
                 #Call methods for Blood Preassure
                 bloodpreassure_alarm, bloodlevel = Bloodpressure(bloodpreassure)
-                print(bloodpreassure_alarm)
+                #print(bloodpreassure_alarm)
+                #print(bloodlevel)
+                print(f"Blood Preassure avg: {bloodpreassure_alarm}", "Blood Preassure alarm level: ", bloodlevel)
 
 if __name__ == "__main__":
     main()
