@@ -11,22 +11,27 @@ OXY_ZERO = 0
 
 def Pulse(heart_rate: int):
     if isinstance(heart_rate, int):
+        '''
+        Impossible = 1
+        Low = 1
+        Medium = 2
+        Highest = 3'''
         if heart_rate < 0: # if heart rate is less than 0
-            return "Low"
-        if heart_rate < 20 : # if heart rate is less than 20
-            return "Highest"
-        if heart_rate < 40: # if heart rate is less than 40
-            return "Medium"
+            return ("Low", 1)
+        if heart_rate <= 20 : # if heart rate is less than or equal to 20
+            return ("Highest", 3)
+        if heart_rate <= 40: # if heart rate is less than  or equal to 40
+            return ("Medium", 2)
         if heart_rate <= 130: # if heart rate is less than or equal to 130
-            return "Low"
+            return ("Low", 1)
         if heart_rate <= 170: # if heart rate is less than or equal to 170
-            return "Medium"
+            return ("Medium", 2)
         if heart_rate <= 210: # if heart rate is less than or equal to 210
-            return "Highest"
+            return ("Highest", 3)
         else:
-            return "Impossible"
+            return ("Impossible", 1)
     else:
-        return "Low"
+        return ("Low", 1)
 
 
 def BloodOxygen(percent):
