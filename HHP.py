@@ -65,7 +65,6 @@ def BloodOxygen(percent):
         print("equipment fell off finger")
         # return avg
 
-
     # Adds up the readinggs and gets the avereage
     for x in range(len(OXY_LIST)):
         total += OXY_LIST[x]

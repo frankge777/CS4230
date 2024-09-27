@@ -11,7 +11,8 @@ def test_pulse():
     assert HHP.Pulse(130) == ("Low", 1)
     assert HHP.Pulse(170) == ("Medium", 2)
     assert HHP.Pulse(210) == ("Highest", 3)
-    
+    assert HHP.Pulse("210") == ("Low", 1)
+    assert HHP.Pulse(260) == ("Impossible", 1)
     
 def test_BloodOxygen():
     pass
