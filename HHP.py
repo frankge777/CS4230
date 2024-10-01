@@ -125,7 +125,7 @@ def main():
 
     #Read contents line by line
     for x in f:
-        print(x)
+        #print(x)
         line = x.split()
         #Print line[] Statements for debugging purposes only
         #Code for proccessing Pulse Rate
