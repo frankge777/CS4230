@@ -16,7 +16,8 @@ def test_pulse():
     assert HHP.Pulse(260) == ("Impossible", 1)
     
 def test_BloodOxygen():
-    pass
+    assert HHP.BloodOxygen(100) == (None)
+    assert HHP.BloodOxygen(-1) == (None)
     
 def test_Bloodpressure():
     pass
