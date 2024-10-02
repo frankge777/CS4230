@@ -39,6 +39,7 @@ def BloodOxygen(percent):
     total = 0
     alarm = 0
     badInput = False
+    message = "Everything is normal"
 
     if percent > 99.9 or percent < 0:
         badInput = True
@@ -71,17 +72,20 @@ def BloodOxygen(percent):
     avg = total / len(OXY_LIST)
 
     if percent > 85:
-        return("None", "Everything is Normal")
+        return("None", message)
     elif percent <= 50:
         alarm = "High"
+        message = "Blood Oxygen level dangerously Low"
     elif percent <= 80:
         alarm = "Med"
+        message = "Blood Oxygen level Low"
     elif percent <= 85:
         alarm = "Low"
+        message = "Blood Oxygen level Low"
     if badInput == True:
         return (avg, "1 - Input not possible.")
     
-    return (alarm, "Blood Oxygen level") 
+    return (alarm, message) 
 
 
 def increment_time(hours, mins, increment=10):
