@@ -119,57 +119,64 @@ def Bloodpressure(input):
 
     
 def main():
-    #Open the file with data
-    with open(sys.argv[1],"r") as f:
-        hours = 0
-        mins = 0
+    if len(sys.argv) > 1:  # Check if a file is provided in the command line arguments
+        input_source = open(sys.argv[1], "r")
+    else:
+        print("No file specified, switching to interactive mode.")
+        input_source = sys.stdin  # Read input from the command line
 
-        #Read contents line by line
-        for x in f:
-            #print(x)
-            line = x.split()
-            
-            #Print line[] Statements for debugging purposes only
-            #Code for proccessing Pulse Rate
-            if len(line) > 0:
-                line[0]
-                pulse = int(line[0])
-                #print(line[0])
-                #Check if data exists for Blood Preassure
-                #If so, proccess it
-                current_time = format_time(hours, mins)
-                print("Time:", current_time)
-            
-                # Increment time by 10 minutes
-                hours, mins = increment_time(hours, mins)
+    hours = 0
+    mins = 0
 
-                if(len(line) > 1):
-                    if "/" in line[1]:
-                        bloodpreassure = line[1] 
-                    else:
-                        bloodoxygen = float(line[1])
-                    #print(line[1])
-                #Check if data exists for Blood Oxygen Level
-                #If so, proccess it
-                if(len(line) > 2):
-                    bloodpreassure = line[2]
-                    #print(line[2])
-                #Wait 10 seconds for the next line to be proccessed
-                #Call methods for Pulse
-                #print("Pulse alarm level: ", Pulse(pulse))
-                pulse_alarm = Pulse(pulse)
-                #print(pulse_alarm)
+    print("Enter data in the following format: pulse_rate [blood_oxygen] [blood_pressure]\n"
+          "For example: 86 92 120/80\n"
+          "Type 'exit' to stop input.")
 
-                #Call methods for Blood Oxygen
-                avg, BOL = BloodOxygen(bloodoxygen)
-                print(f"Blood Oxy avg: {avg:.2f}", "Blood Oxy alarm level: ", BOL)
-                
-                
-                #Call methods for Blood Preassure
-                bloodpreassure_alarm, bloodlevel = Bloodpressure(bloodpreassure)
-                #print(bloodpreassure_alarm)
-                #print(bloodlevel)
-                print(f"Blood Preassure avg: {bloodpreassure_alarm}", "Blood Preassure alarm level: ", bloodlevel)
+    # Read input line by line
+    for x in input_source:
+        if x.strip().lower() == 'exit':
+            break  # Exit the loop if the user types 'exit'
+        
+        line = x.split()
+
+        if len(line) == 0:
+            continue  # Skip empty lines
+
+        pulse = int(line[0])
+        bloodoxygen = None
+        bloodpressure = None
+
+        current_time = format_time(hours, mins)
+        print("Time:", current_time)
+
+        # Increment time by 10 minutes
+        hours, mins = increment_time(hours, mins)
+
+        # Process blood oxygen if available
+        if len(line) > 1:
+            if "/" in line[1]:
+                bloodpressure = line[1]
+            else:
+                bloodoxygen = float(line[1])
+
+        # Process blood pressure if available
+        if len(line) > 2:
+            bloodpressure = line[2]
+
+        # Output results and alarms
+        print("Pulse alarm level: ", Pulse(pulse))
+
+        if bloodoxygen is not None:
+            avg, BOL = BloodOxygen(bloodoxygen)
+            print(f"Blood Oxy avg: {avg:.2f}", "Blood Oxy alarm level: ", BOL)
+
+        if bloodpressure is not None:
+            bloodpressure_alarm, bloodlevel = Bloodpressure(bloodpressure)
+            print(bloodpressure_alarm)
+
+    # Close the file if reading from a file
+    if input_source is not sys.stdin:
+        input_source.close()
 
 if __name__ == "__main__":
     main()
