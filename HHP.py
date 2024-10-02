@@ -31,17 +31,17 @@ def Pulse(heart_rate: int):
         else:
             return ("Impossible", 1)
     else:
-        return ("Low", 1)
+        return ("Low", 1) # returns everything normal?
 
 
 def BloodOxygen(percent):
     global OXY_ZERO
     total = 0
     alarm = 0
+    badInput = False
 
     if percent > 99.9 or percent < 0:
-        print("Input not possible.")
-        return
+        badInput = True
     # Adds the new reading and gets rid of the oldest one
     if len(OXY_LIST) >= 6:
         OXY_LIST.pop(0)
@@ -70,19 +70,25 @@ def BloodOxygen(percent):
         total += OXY_LIST[x]
     avg = total / len(OXY_LIST)
 
-    if percent <= 50:
-        alarm = 3
+    if percent > 85:
+        return("None", "Everything is Normal")
+    elif percent <= 50:
+        alarm = "High"
     elif percent <= 80:
-        alarm = 2
+        alarm = "Med"
     elif percent <= 85:
-        alarm = 1
-    return (avg, alarm)
+        alarm = "Low"
+    if badInput == True:
+        return (avg, "1 - Input not possible.")
+    
+    return (alarm, "Blood Oxygen level") 
+
 
 def increment_time(hours, mins, increment=10):
     # Increase minutes by the increment value (default is 10)
     mins += increment
     if mins >= 60:
-        mins -= 60
+        mins -= 60 # would this just reset to 0?
         hours += 1
     if hours >= 24:
         hours = 0  # Reset to 00 after 24 hours
@@ -158,7 +164,7 @@ def main():
 
             #Call methods for Blood Oxygen
             avg, BOL = BloodOxygen(bloodoxygen)
-            print(f"Blood Oxy avg: {avg:.2f}", "Blood Oxy alarm level: ", BOL)
+            print(f"\t",avg,"\t", BOL)
 
             #Call methods for Blood Preassure
             bloodpreassure_alarm, bloodlevel = Bloodpressure(bloodpreassure)
