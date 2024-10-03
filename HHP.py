@@ -119,28 +119,28 @@ def format_time(hours, mins):
 
 def Bloodpressure(input):
     alarm = ''
-    level = 0
+    level = ''
     values = input.split('/')
     systolic = int(values[0])
     diastolic = int(values[1])
     
     if (systolic > 200 or diastolic > 120) or (systolic < 70 or diastolic > 40):
-        level = 2
+        level = 'Med'
         alarm = "Blood pressure medium"
     elif systolic > 150 or diastolic > 90:
-        level = 1
+        level = 'low'
         alarm = "Blood pressure low"
     elif systolic < 50 or diastolic < 33:
-        level = 3
+        level = 'high'
         alarm = "Blood pressure dangerously high" 
     elif systolic > 230 or diastolic > 150:
-        level = 2
+        level = 'Med'
         alarm = "equiment error"
     else:
-        level = 0
+        level = 'normal'
         alarm = "Blood pressure normal"
         
-    return (alarm,level)
+    return (level,alarm)
 
 def is_text_file(filename):
     return filename.endswith(('.txt', '.dat')) 
