@@ -78,6 +78,7 @@ Bad data, including impossible values, are considered equipment malfunctions and
 Time: 00:00
         None - Everything normal
         None - Everything is normal
+        Blood pressure medium - 2
 
 Time: 00:10
         None - Everything normal
