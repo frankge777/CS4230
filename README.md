@@ -7,12 +7,12 @@ The Happy Heart Program is designed to monitor the heart functions of a hospital
 - Blood oxygen level
 
 ## Functionality
-This program simulates monitoring by reading data either from a file. Data is read every 10 seconds, with the following specifics:
+This program simulates monitoring by reading data from a file. Data is read every "10" seconds, with the following specifics:
 - Pulse readings are taken every 10 seconds.
 - Oxygen levels are normally read every 10 seconds but can occasionally be missing.
 - Blood pressure readings are taken at irregular intervals.
 
-The program prints a status update every 10 seconds, including:
+The program prints a status update for every vital every 10 seconds, including:
 - A timestamp
 - An alert level (None, Low, Medium, Highest)
 - A description of the problem causing the alert
