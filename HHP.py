@@ -2,6 +2,7 @@
 
 import sys
 import time
+import os
 
 # Globals
 OXY_LIST = []
@@ -11,27 +12,42 @@ OXY_ZERO = 0
 
 def Pulse(heart_rate: int):
     if isinstance(heart_rate, int):
-        '''
-        Impossible = 1
-        Low = 1
-        Medium = 2
-        Highest = 3'''
+        alarm = "Low"
+        message = "Everything is normal"
+
         if heart_rate < 0: # if heart rate is less than 0
-            return ("Low", 1)
-        if heart_rate <= 20 : # if heart rate is less than or equal to 20
-            return ("Highest", 3)
-        if heart_rate <= 40: # if heart rate is less than  or equal to 40
-            return ("Medium", 2)
-        if heart_rate <= 130: # if heart rate is less than or equal to 130
-            return ("Low", 1)
-        if heart_rate <= 170: # if heart rate is less than or equal to 170
-            return ("Medium", 2)
-        if heart_rate <= 210: # if heart rate is less than or equal to 210
-            return ("Highest", 3)
+            alarm = "Low"
+            message = "Heart rate must be positive"
+            
+        elif heart_rate <= 20 : # if heart rate is less than or equal to 20
+            alarm = "Highest"
+            message = "Heart rate dangerously low"
+            
+        elif heart_rate <= 40: # if heart rate is less than  or equal to 40
+            alarm = "Medium"
+            message = "Heart rate low" 
+            
+        elif heart_rate <= 130: # if heart rate is less than or equal to 130
+            alarm = "None"
+            message = "Everything normal"
+            
+        elif heart_rate <= 170: # if heart rate is less than or equal to 170
+            alarm = "Medium"
+            message = "Heart rate elevated"
+            
+        elif heart_rate <= 210: # if heart rate is less than or equal to 210
+            alarm = "Highest"
+            message = "Heart rate dangerously high"
+            
         else:
-            return ("Impossible", 1)
+            alarm = "Impossible"
+            message = "Heart rate monitor malfunction"
+         
     else:
-        return ("Low", 1) # returns everything normal?
+        alarm = "Impossible"
+        message = "Heart rate monitor malfunction"
+
+    return (alarm, message)
 
 
 def BloodOxygen(percent):
@@ -126,57 +142,59 @@ def Bloodpressure(input):
         
     return (alarm,level)
 
-    
+def is_text_file(filename):
+    return filename.endswith(('.txt', '.dat')) 
+
+def print_func(alarm, message):
+    print(f"\t{alarm} - {message}") # print("alarm, message)
+
+
 def main():
-    #Open the file with data
-    f = open(sys.argv[1],"r")
+    input_bool = True
+    input_file = None
     hours = 0
     mins = 0
-
-    #Read contents line by line
-    for x in f:
-        #print(x)
-        line = x.split()
-        #Print line[] Statements for debugging purposes only
-        #Code for proccessing Pulse Rate
-        if len(line) > 0:
-            line[0]
-            pulse = int(line[0])
-            #print(line[0])
-            #Check if data exists for Blood Preassure
-            #If so, proccess it
-            current_time = format_time(hours, mins)
-            print("Time:", current_time)
+    
+    while input_bool:
+        input_file = input("Enter name of input file: ")
+        if os.path.isfile(input_file) and is_text_file(input_file):
+            input_bool = False
+            break
+        print("Enter valid file")
+        
+        
+    with open(input_file) as f:
+        lines = f.readlines()
+        for line in lines:
+            line = line.strip()
+            line = line.split()
+            if line:
+                pulse = int(line[0])
+                current_time = format_time(hours, mins)
+                print("Time:", current_time)
+                hours, mins = increment_time(hours, mins) #increment time by 10 seconds
+                
+                if(len(line) > 1):
+                    if "/" in line[1]:
+                        bloodpressure = line[1] 
+                    else:
+                        bloodoxygen = float(line[1])
+                
+                #Check if data exists for Blood Oxygen Level
+                #If so, proccess it
+                if(len(line) > 2):
+                    bloodpressure = line[2]
+                
             
-            # Increment time by 10 minutes
-            hours, mins = increment_time(hours, mins)
-
-            if(len(line) > 1):
-                if "/" in line[1]:
-                    bloodpreassure = line[1] 
-                else:
-                    bloodoxygen = float(line[1])
-                #print(line[1])
-            #Check if data exists for Blood Oxygen Level
-            #If so, proccess it
-            if(len(line) > 2):
-                bloodpreassure = line[2]
-                #print(line[2])
-            #Wait 10 seconds for the next line to be proccessed
-            #Call methods for Pulse
-            print("Pulse alarm level: ", Pulse(pulse))
-
-            #Call methods for Blood Oxygen
-            avg, BOL = BloodOxygen(bloodoxygen)
-            print(f"\t",avg,"\t", BOL)
-
-            #Call methods for Blood Preassure
-            bloodpreassure_alarm, bloodlevel = Bloodpressure(bloodpreassure)
-            print(bloodpreassure_alarm)
-            time.sleep(1)
-
-        #close the file
-    f.close()
+                #Call methods for Pulse
+                pulse_alarm, pulse_message = Pulse(pulse)
+                avg, BOL = BloodOxygen(bloodoxygen)
+                bloodpressure_alarm, bloodlevel = Bloodpressure(bloodpressure)
+                print_func(pulse_alarm, pulse_message)
+                print_func(avg, BOL)
+                print_func(bloodpressure_alarm, bloodlevel)
+                print("\n")
+                time.sleep(1)
 
 
 if __name__ == "__main__":

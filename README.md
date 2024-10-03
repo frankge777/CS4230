@@ -7,7 +7,7 @@ The Happy Heart Program is designed to monitor the heart functions of a hospital
 - Blood oxygen level
 
 ## Functionality
-This program simulates monitoring by reading data either from a file or from the keyboard. Data is read every 10 seconds, with the following specifics:
+This program simulates monitoring by reading data either from a file. Data is read every 10 seconds, with the following specifics:
 - Pulse readings are taken every 10 seconds.
 - Oxygen levels are normally read every 10 seconds but can occasionally be missing.
 - Blood pressure readings are taken at irregular intervals.
@@ -45,7 +45,7 @@ The program continuously monitors the data and raises alarms to alert nurses of 
 - **Medium:** Dangerous condition detected
 - **Low:** Potential problem; maybe an equipment problem
 
-When reporting, only the highest level of alarm is reported. The order of precedence for simultaneous alarms is Pulse, Oxygen, Blood Pressure.
+All vital levels are printed to the console after the time. 
 
 ### Alarm Levels
 - **Pulse:**
@@ -75,9 +75,18 @@ Bad data, including impossible values, are considered equipment malfunctions and
 
 ## Example Output
 ```
-00:00  Med Alarm  Blood pressure elevated (145/100)
+00:00  Medium Alarm  Blood pressure elevated (145/100)
 00:10  None       Everything normal
 ```
 Times are in `mm:ss` format and wrap around every hour.
 
 This README provides a basic overview of the Happy Heart Program's functionality, input format, monitoring, and alarm levels. For detailed implementation, refer to the project documentation and code comments.
+
+## To Run Program
+
+To run program move to directory Python file is stored in and then input into the console:
+```
+python HHP.py
+```
+
+
