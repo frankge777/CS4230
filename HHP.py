@@ -166,6 +166,7 @@ def main():
     with open(input_file) as f:
         lines = f.readlines()
         for line in lines:
+            bloodpressure = None
             line = line.strip()
             line = line.split()
             if line:
@@ -189,10 +190,13 @@ def main():
                 #Call methods for Pulse
                 pulse_alarm, pulse_message = Pulse(pulse)
                 avg, BOL = BloodOxygen(bloodoxygen)
-                bloodpressure_alarm, bloodlevel = Bloodpressure(bloodpressure)
                 print_func(pulse_alarm, pulse_message)
                 print_func(avg, BOL)
-                print_func(bloodpressure_alarm, bloodlevel)
+                if bloodpressure is not None:
+                    bloodpressure_alarm, bloodlevel = Bloodpressure(bloodpressure)
+                    print_func(bloodpressure_alarm, bloodlevel)
+                else:
+                    print_func("None", "No reading was recieved")
                 print("\n")
                 time.sleep(1)
 
