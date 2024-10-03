@@ -75,8 +75,14 @@ Bad data, including impossible values, are considered equipment malfunctions and
 
 ## Example Output
 ```
-00:00  Medium Alarm  Blood pressure elevated (145/100)
-00:10  None       Everything normal
+Time: 00:00
+        None - Everything normal
+        None - Everything is normal
+
+Time: 00:10
+        None - Everything normal
+        None - Everything is normal
+        Blood pressure medium - 2
 ```
 Times are in `mm:ss` format and wrap around every hour.
 
@@ -87,6 +93,10 @@ This README provides a basic overview of the Happy Heart Program's functionality
 To run program move to directory Python file is stored in and then input into the console:
 ```
 python HHP.py
+```
+User will then be asked to input a file, txt or dat files only:
+```
+Enter name of input file:
 ```
 
 
