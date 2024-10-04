@@ -11,41 +11,41 @@ OXY_ZERO = 0
 
 
 def Pulse(heart_rate: int):
-    if isinstance(heart_rate, int):
-        alarm = "Low"
-        message = "Everything is normal"
+    try:
+        heart_rate = int(heart_rate)
+    except ValueError:
+        return ("Impossible", "Heart rate monitor malfunction")
+    
+    alarm = "Low"
+    message = "Everything is normal"
 
-        if heart_rate < 0: # if heart rate is less than 0
+    if heart_rate < 0: # if heart rate is less than 0
             alarm = "Low"
             message = "Heart rate must be positive"
             
-        elif heart_rate <= 20 : # if heart rate is less than or equal to 20
+    elif heart_rate <= 20 : # if heart rate is less than or equal to 20
             alarm = "Highest"
             message = "Heart rate dangerously low"
             
-        elif heart_rate <= 40: # if heart rate is less than  or equal to 40
-            alarm = "Medium"
+    elif heart_rate <= 40: # if heart rate is less than  or equal to 40
+            alarm = "Med"
             message = "Heart rate low" 
             
-        elif heart_rate <= 130: # if heart rate is less than or equal to 130
+    elif heart_rate <= 130: # if heart rate is less than or equal to 130
             alarm = "None"
-            message = "Everything normal"
+            message = "Everything is normal"
             
-        elif heart_rate <= 170: # if heart rate is less than or equal to 170
-            alarm = "Medium"
+    elif heart_rate <= 170: # if heart rate is less than or equal to 170
+            alarm = "Med"
             message = "Heart rate elevated"
             
-        elif heart_rate <= 210: # if heart rate is less than or equal to 210
+    elif heart_rate <= 210: # if heart rate is less than or equal to 210
             alarm = "Highest"
             message = "Heart rate dangerously high"
             
-        else:
+    else:
             alarm = "Impossible"
             message = "Heart rate monitor malfunction"
-         
-    else:
-        alarm = "Impossible"
-        message = "Heart rate monitor malfunction"
 
     return (alarm, message)
 
@@ -170,7 +170,8 @@ def main():
             line = line.strip()
             line = line.split()
             if line:
-                pulse = int(line[0])
+                #pulse = int(line[0])
+                pulse = line[0]
                 current_time = format_time(hours, mins)
                 print("Time:", current_time)
                 hours, mins = increment_time(hours, mins) #increment time by 10 seconds

@@ -78,12 +78,13 @@ Bad data, including impossible values, are considered equipment malfunctions and
 Time: 00:00
         None - Everything normal
         None - Everything is normal
-        Blood pressure medium - 2
+        Med - Blood pressure medium
+
 
 Time: 00:10
         None - Everything normal
         None - Everything is normal
-        Blood pressure medium - 2
+        None - No reading was recieved
 ```
 Times are in `mm:ss` format and wrap around every hour.
 
