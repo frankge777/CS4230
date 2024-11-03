@@ -1,5 +1,5 @@
 import HHP
-import pytest
+# import pytest
 import subprocess
 
 def test_pulse():
@@ -16,8 +16,13 @@ def test_pulse():
     assert HHP.Pulse(260) == ("Impossible", 1)
     
 def test_BloodOxygen():
-    assert HHP.BloodOxygen(100) == (None)
-    assert HHP.BloodOxygen(-1) == (None)
+    HHP.OXY_LIST = [95, 95, 95, 95, 95]
+    assert HHP.BloodOxygen(95) == ("None", "Everything normal")
+    HHP.OXY_LIST.clear()
+
+    HHP.OXY_LIST = [85, 85, 85, 85, 85]
+    print(HHP.OXY_LIST)
+    assert HHP.BloodOxygen(79) == ("Low", "Blood Oxygen level Low")
     
 def test_Bloodpressure():
     pass
