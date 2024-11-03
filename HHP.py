@@ -55,7 +55,7 @@ def BloodOxygen(percent):
     total = 0
     alarm = 0
     badInput = False
-    message = "Everything normal"
+    message = "Everything is normal"
 
     if percent > 99.9 or percent < 0:
         badInput = True
