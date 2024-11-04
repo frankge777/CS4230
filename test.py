@@ -25,7 +25,33 @@ def test_BloodOxygen():
     assert HHP.BloodOxygen(79) == ("Low", "Blood Oxygen level Low")
     
 def test_Bloodpressure():
-    pass
+    # Test Case 1: Systolic above 200 and diastolic above 120 - Medium alarm
+    assert Bloodpressure("201/121") == ("Med", "Blood pressure medium")
+    
+    # Test Case 2: Systolic just below high threshold (boundary test) - Normal
+    assert Bloodpressure("199/119") == ("normal", "Blood pressure normal")
+    
+    # Test Case 3: Systolic above 150 and diastolic above 90 - Low alarm
+    assert Bloodpressure("151/91") == ("low", "Blood pressure low")
+    
+    # Test Case 4: Systolic below 70 and diastolic below 40 - Medium alarm
+    assert Bloodpressure("69/39") == ("Med", "Blood pressure medium")
+    
+    # Test Case 5: Systolic below 50 and diastolic below 33 - Highest alarm
+    assert Bloodpressure("49/32") == ("high", "Blood pressure dangerously high")
+    
+    # Test Case 6: Systolic above 230 and diastolic above 150 - Equipment error
+    assert Bloodpressure("231/151") == ("Med", "equiment error")
+    
+    # Test Case 7: Normal blood pressure - Normal
+    assert Bloodpressure("120/80") == ("normal", "Blood pressure normal")
+    
+    # Test Case 8: Invalid reading boundary (just over the malfunction threshold) - Equipment error
+    assert Bloodpressure("230/150") == ("Med", "equiment error")
+    
+    # Test Case 9: Below medium threshold - Boundary check for medium
+    assert Bloodpressure("200/120") == ("Med", "Blood pressure medium")
+
 def test_increment_time():
     assert HHP.increment_time(0,0) == (0,10)
      
