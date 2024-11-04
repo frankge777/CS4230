@@ -16,13 +16,35 @@ def test_pulse():
     assert HHP.Pulse(260) == ("Impossible", 1)
     
 def test_BloodOxygen():
-    HHP.OXY_LIST = [95, 95, 95, 95, 95]
-    assert HHP.BloodOxygen(95) == ("None", "Everything normal")
-    HHP.OXY_LIST.clear()
+    # Case 1: List of 85s & New Read of 80
+    HHP.OXY_LIST = [85, 85, 85]
+    assert HHP.BloodOxygen(80) == ("Low", "Blood Oxygen level Low")
+    
+    # Case 2: List of 95s & New Read of 95
+    HHP.OXY_LIST = [95, 95, 95]
+    assert HHP.BloodOxygen(95) == ("None", "Everything is normal")
+    
+    # Case 3: List of 81s & New Read of 70
+    HHP.OXY_LIST = [81, 81, 81]
+    assert HHP.BloodOxygen(70) == ("Med", "Blood Oxygen level Low")
+    
+    # Case 4: List of 51s & New Read of 40
+    HHP.OXY_LIST = [51, 51, 51]
+    assert HHP.BloodOxygen(40) == ("High", "Blood Oxygen level dangerously Low")
+    
+    # Case 5: Input of 101
+    HHP.OXY_LIST = []
+    assert HHP.BloodOxygen(101) == ("Low", "Input not possible")
+    
+    # Case 6: Input of -1
+    HHP.OXY_LIST = []
+    assert HHP.BloodOxygen(-1) == ("Low", "Input not possible")
 
-    HHP.OXY_LIST = [85, 85, 85, 85, 85]
-    print(HHP.OXY_LIST)
-    assert HHP.BloodOxygen(79) == ("Low", "Blood Oxygen level Low")
+    # Case 5: List of 0's and a new read of 0
+    HHP.OXY_LIST = [0, 0, 0]
+    HHP.OXY_ZERO = 3
+    assert HHP.BloodOxygen(0) == ("Low", "* Check device connection *")
+
     
 def test_Bloodpressure():
     # Test Case 1: Systolic above 200 and diastolic above 120 - Medium alarm

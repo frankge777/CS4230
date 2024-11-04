@@ -79,7 +79,8 @@ def BloodOxygen(percent):
             else:
                 i += 1
         avg = total / i
-        print("equipment fell off finger")
+        message = "* Check device connection *"
+        return ("Low", message)
         # return avg
 
     # Adds up the readinggs and gets the avereage
@@ -87,16 +88,16 @@ def BloodOxygen(percent):
         total += OXY_LIST[x]
     avg = total / len(OXY_LIST)
 
-    if percent > 85:
+    if avg > 85:
         alarm = "None"
         # return("None", message)
-    elif percent <= 50:
+    elif avg <= 50:
         alarm = "High"
         message = "Blood Oxygen level dangerously Low"
-    elif percent <= 80:
+    elif avg <= 80:
         alarm = "Med"
         message = "Blood Oxygen level Low"
-    elif percent <= 85:
+    elif avg <= 85:
         alarm = "Low"
         message = "Blood Oxygen level Low"
     if badInput == True:
